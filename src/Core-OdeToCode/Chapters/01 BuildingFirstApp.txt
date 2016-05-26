@@ -1,0 +1,25 @@
+﻿In file system you will fine 2 files:
+
+1. 'Core-OdeToCode.sln' - a solution file.
+2. 'global.json' - solution configuration file for location of 'src' for source and 'test' for test project.
+
+Major Change:
+- In this version file system is my project system. Now no need to create a file and then include in project.
+- Every time you change your file ASP.NET engine will compile your project on fly. and no need to build project.
+================================================================================================================
+Project file system:
+
+project.json - to store configuration information (its a main file of the project)
+	* contains the version number of the project
+	* contains the dependencies of the project (libraries)
+	* framework section tells about targeting .NET versions
+		- dnx451: existing full .Net framework
+		- dnxcore50: new core framework (cross platform framework)
+
+New wwwroot folder - All static files like html, css, js file will be go in this folder for hosting.
+
+Startup.cs - in previous version we have global.asax file to place code on startup application and web.config file both are gone now.
+	Startup class: class ASP.NET look for startup and here we configure our application and configure my configuration sources.
+		- Configure Method: to build HTTP processing pipeline this define how you are going to response on a request.
+		- ConfigureServices Method: to configure component for application to setup inversion of control container.
+=====================================================================================================================================

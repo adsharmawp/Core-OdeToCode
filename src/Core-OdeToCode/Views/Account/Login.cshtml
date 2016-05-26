@@ -1,0 +1,29 @@
+﻿@model Core_OdeToCode.ViewModels.LoginViewModel
+
+@{ 
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+<form method="post" asp-controller="Account" asp-action-returnurl="@Model.ReturnUrl">
+    <div asp-validation-summary="ValidationSummary.ModelOnly"></div>
+    <div>
+        <label asp-for="Username"></label>
+        <input asp-for="Username" />
+        <span asp-validation-for="Username"></span>
+    </div>
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div>
+        <label asp-for="Remember"></label>
+        <input asp-for="Remember" />
+        <span asp-validation-for="Remember"></span>
+    </div>
+    <div>
+        <input type="submit" value="Login" />
+    </div>
+</form>

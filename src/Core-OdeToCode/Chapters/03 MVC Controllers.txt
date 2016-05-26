@@ -1,0 +1,34 @@
+﻿Request comes to mvc Route and route redirect it to your controller based on the url path
+Controller: Controller create a model and select a view and return
+Model: information 
+View: ui
+===================================================================================================
+Routing : MVC middleware decides where to route q request based on url and configuration information
+ 1. Convention based routing: 
+	routeBuilder.MapRoute("Default", "{controller=Home}/{action=index}/{id?}");
+ 2. Attribute routing: 
+	[Route("[Controller]/[Action]")]
+===================================================================================================
+You can create a controller in 'Controllers' folder its a convention
+and you can implement a plain controller (not deriving from any class) but that will not give you any ability to return except string
+so you should drive your controller from Controller class this will give lot of ability and information.
+
+If you derive your controller from 'Controller' class also allows you to send back complex results derived from 
+'IActionResult' like model, view
+===============================================================================================================================
+Post-Redirect-Get Pattern: Do not return View from post instead redirect it; as user can refresh its browser and make post again.
+===============================================================================================================================
+Model Validation:
+Most easy is Data Annotation attributes; MinLength, MaxLength, Range, RegularExpression, Required, Compare, DataType etc.
+Once you applied the annotation then instead of using
+@Html.TextBoxFor(m => m.Name) <==with==> @Html.EditorFor(m => m.Name)
+To need to enforce client side validation we will add some JavaScript libraries in last chapter.
+But for now we can use server side validation and that is most important.
+So same data annotation needs to be applied on RestaurantEditViewModel.
+When you derive from base controller class you will have ModalState property to add new model error or validate model with IsValid.
+if model is not valid return the same view and show the error message to user by adding following in .cshtml page.
+@Html.ValidationMessageFor(m => m.Name)
+
+
+
+

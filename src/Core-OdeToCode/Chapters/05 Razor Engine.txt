@@ -1,0 +1,37 @@
+﻿_Layout.cshtml
+
+_LayoutView as like Master page.
+We will create 'Shared' folder inside a 'View' folder.
+You may want to handle head link section and footer here.
+ViewBag: is a data structure to add any property to pass to or between views
+
+
+@RenderBody() actual body of the page
+@RenderSection() to get some section from page on master page.
+======================================================================
+_ViewStart.cshtml   to execute code before any view.. to set layout
+_ViewImport.cshtml to import namespace this is a common place.  (new feature instead of using configuration)
+======================================================================
+Tag Helpers: (new feature in this mvc) just like html helpers will help us in rendering the html
+in many cases you can replace html helper with the tag helpers 
+why? tag helpers are blend in html (like angular directive) they appear like they are html attribute  and element.
+
+Add NuGet library: "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final"
+
+first you need to register tag helper and we can do it in _ViewImport.cshtml
+@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+// * for all hlpers...
+Cash helper can cash the content to be more fast.
+======================================================================
+C# 6 interpulation feature is to $"Edit - {Model.Name}"
+======================================================================
+Restaurant implements a Unit of Design pattern..
+======================================================================
+Partial View: is a view that rendered a part of a view. may be for ReUse or 
+	Partial view relay on parent model data.
+View Component:  (New in MVC 6)
+	Can go out and get model independently.
+	Child action are gone.
+
+
+

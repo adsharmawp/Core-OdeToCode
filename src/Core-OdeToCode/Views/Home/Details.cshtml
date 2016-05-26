@@ -1,0 +1,11 @@
+﻿@model Core_OdeToCode.Entities.Restaurant
+
+<small>Id : @Model.Id</small>
+<h5>Name : @Model.Name</h5>
+<h3>Cuisine : @Model.Cuisine</h3>
+<div>
+    <a href="/">Root of Site by a tag</a>
+</div>
+<div>
+    @Html.ActionLink("Back to Home by Html.ActionLink", "Index")
+</div>

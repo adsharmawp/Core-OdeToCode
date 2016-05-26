@@ -1,0 +1,5 @@
+﻿ASP.NET Identity framework to implement authentication.
+
+Windows, Form, 3rd party - google, facebook, github etc..
+==========================================================================================
+NuGet: Register, Login, Logout

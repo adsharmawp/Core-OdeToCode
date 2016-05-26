@@ -1,0 +1,58 @@
+﻿middleware controls how our application is going to response of http request; how to response on error; keep pieces
+ to authorize and authenticate a user.
+ ====================================================================================================================
+ When a Http request arrives in ASP.NET middleware components determine how to process that request.
+ - each piece of middleware is an object (with focused and limited role)
+ - We can have many pieces of middleware to behave correctly
+ ==>|HTTP-Request|--->|Logger|--->|Authorizer|--->|Router|--->|Controller|--|Response|
+ <===================================================================================|
+ Request will then go back one by one on each middleware.
+ ====================================================================================================================
+ Configure Method: We setup our middleware pieces in this method. we invoke extension method on IApplicationBuilder interface.
+ Example:
+  app.UseIISPlatformHandler() => allows to windows authentication token that IIS sends along.
+  app.Run() => a run method allows us to pass in another method which we can use to process every single response. 
+
+app.Run is a terminal piece of middleware kind of who doesn't give opportunity to run another piece.
+Every piece of middleware receives a HttpContext object to access Request and Response objects.
+ ===================================================================================================================
+ Most common middleware are piece register with 'Use' method example: UseIISPlatformHandler...
+ ====================================================================================================================
+ Exception Handling:
+	- 1st add new package 'Microsoft.AspNet.Diagnostics'
+app.UseWelcomePage()
+		* app.UseWelcomePage(); just to check that everything is configured properly
+UseRuntimeInfoPage()
+		* app.UseRuntimeInfoPage(); to get runtime info on url '/runtimeinfo'
+app.UseRuntimeInfoPage("info")
+		* app.UseRuntimeInfoPage("info"); to get runtime info on url '/info'
+app.UseDeveloperExceptionPage()
+		* If any of your middleware throws an exception you will just get a blank page but if you open developer tool 
+			- you will get 500 exception so to see the details of your exception add middleware to see all details on page.
+====================================================================================================================
+If you add one more dependency in Configure method i.e. IHostingEnvironment environment you can check about your running environment.
+if(environment.IsDevelopment())
+{
+	app.UseDeveloperExceptionPage();
+}
+else
+{
+    //...Error page for user
+}
+environment variable are set on project properties.
+====================================================================================================================
+File from file system. add index.html file in wwwroot folder
+Add new NuGet package called "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final" add 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+OR
+app.UseFileServer();
+====================================================================================================================
+Setting up ASP.NET MVC:
+1. Add package
+2. Register Services
+3. Add Middleware
+
+1. add "Microsoft.AspNet.Mvc": "6.0.0-rc1-final"
+2. add services.AddMvc(); in ConfigureServices method
+3. You have 2 options app.UseMvc(); OR app.UseMvcWithDefaultRoute();

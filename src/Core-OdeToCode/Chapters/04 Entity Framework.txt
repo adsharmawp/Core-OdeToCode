@@ -1,0 +1,132 @@
+﻿Its a new Entity Framework to support NoSql data also (Non relational database)
+Here we are going to use SqlServerLocalDB but we can use any database.
+Make sure 'Microsoft SQL Server Data Tools' are installed first.
+========================================================================================
+Run Developer Command: and Navigate to your project path where project.json is placed.
+Run:> sqllocaldb info // to get sure that localdb installed.
+Run:> sallocaldb info mssqllocaldb // to get more information
+------------------------------------------------------------------------------------------------------------------------
+C:\Users\ash152\Documents\Visual Studio 2015\Projects\OdeToFood0523\src\OdeToFood0523>sqllocaldb info
+MSSQLLocalDB
+ProjectsV13
+v11.0
+
+C:\Users\ash152\Documents\Visual Studio 2015\Projects\OdeToFood0523\src\OdeToFood0523> sqllocaldb info mssqllocaldb
+Name:               MSSQLLocalDB
+Version:            13.0.1100.286
+Shared name:
+Owner:              SAPIENT\ash152
+Auto-create:        Yes
+State:              Stopped
+Last start time:    5/25/2016 2:50:12 PM
+Instance pipe name:
+
+C:\Users\ash152\Documents\Visual Studio 2015\Projects\OdeToFood0523\src\OdeToFood0523>
+------------------------------------------------------------------------------------------------------------------------
+in VS goto View-> Sql Server Objec Explorer.
+========================================================================================
+Install new NuGet Package: "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final", and
+"EntityFramework.Commands": "7.0.0-rc1-final"
+Command Packages are to perform some task from command here we want to perform things on Entity Framework like creating a database, 
+need to make a new entry in command line section of project.json add following line:
+"ef": "EntityFramework.Commands"
+Existing is "web": "Microsoft.AspNet.Server.Kestrel"; web command is to run your web application from the command line using a web server
+named 'Kestrel' it's a cross platform server; you can use it if you don't want to use IIS. even if you are running IIS still it's kestro
+running your application behind the seen. here 'ef' is a simple name of this command.
+========================================================================================
+To use the Entity Framework you need to create a class derived from DbContext.
+Each DbContext class give you access to a single database.
+You can create properties like DbSet<T> to represent tables and T is your entity class representing table columns.
+========================================================================================
+Create a new class under Entities folder OdeToCodeDbContext
+public class OdeToCodeDbContext : DbContext
+{
+    DbSet<Restaurant> Restaurants { get; set; }
+}
+========================================================================================
+you can directly use this context class to manipulate the data but here we have abstraction so we can create new DataService in Services folder
+SqlRestaurantData : IRestaurantData
+Now how the OdeToCodeDbContext will configured with right connection string.
+========================================================================================
+add connection string in appsetting.json file
+And Goto startup class under ConfigureServices and set services.
+use ef commands to create database...for Migration:
+1. Generate Migration code (C# code execute to create a database) we can generate it by commands
+2. Apply Migration to database (to actually create data base by executing generated migration C# code)
+======================================================================================
+goto command prompt:
+current command is 'dnx' in future it will be 'dotnet'.
+to execute 'dnx' first runt 'dnvm'(dot net version manager) and tell the system what 'dnx' version we are targeting to:
+to see the list run
+C:\Users\ash152\Documents\Visual Studio 2015\Projects\OdeToFood0523\src\OdeToFood0523>dnvm list
+
+Active Version           Runtime Architecture OperatingSystem Alias
+------ -------           ------- ------------ --------------- -----
+  *    1.0.0-rc1-final   clr     x86          win
+       1.0.0-rc1-update1 clr     x64          win
+       1.0.0-rc1-update1 clr     x86          win
+       1.0.0-rc1-update1 coreclr x64          win
+       1.0.0-rc1-update1 coreclr x86          win
+
+C:\Users\ash152\Documents\Visual Studio 2015\Projects\OdeToFood0523\src\OdeToFood0523>dnvm use 1.0.0-rc1-final -p
+to set the version. this will set the path in environment variable.
+dnx = dotnet execution environment
+Now you can type and run > dnx ef
+C:\Users\ash152\Documents\Visual Studio 2015\Projects\OdeToFood0523\src\OdeToFood0523>dnx ef
+
+                     _/\__
+               ---==/    \\
+         ___  ___   |.    \|\
+        | __|| __|  |  )   \\\
+        | _| | _|   \_/ |  //|\\
+        |___||_|       /   \\\/\\
+
+Entity Framework Commands 7.0.0-rc1-16348
+
+Usage: dnx ef [options] [command]
+
+Options:
+  --version     Show version information
+  -?|-h|--help  Show help information
+
+Commands:
+  database    Commands to manage your database
+  dbcontext   Commands to manage your DbContext types
+  migrations  Commands to manage your migrations
+
+Use "dnx ef [command] --help" for more information about a command.
+
+C:\Users\ash152\Documents\Visual Studio 2015\Projects\OdeToFood0523\src\OdeToFood0523>
+==================================================================================================================
+Above command show available options so we want to go with migrations.
+C:\Users\ash152\Documents\Visual Studio 2015\Projects\Core-OdeToCode\src\Core-OdeToCode>dnx ef migrations add v1
+Done. To undo this action, use 'ef migrations remove'
+
+C:\Users\ash152\Documents\Visual Studio 2015\Projects\Core-OdeToCode\src\Core-OdeToCode>
+You will find new Migrations folder is created with some C# code for migration.
+Now:
+C:\Users\ash152\Documents\Visual Studio 2015\Projects\Core-OdeToCode\src\Core-OdeToCode>dnx ef database
+
+
+Usage: dnx ef database [options] [command]
+
+Options:
+  -?|-h|--help  Show help information
+
+Commands:
+  update  Updates the database to a specified migration
+
+Use "database [command] --help" for more information about a command.
+
+C:\Users\ash152\Documents\Visual Studio 2015\Projects\Core-OdeToCode\src\Core-OdeToCode>
+As we can see only available command is update. 
+C:\Users\ash152\Documents\Visual Studio 2015\Projects\Core-OdeToCode\src\Core-OdeToCode>dnx ef database update
+Applying migration '20160526055501_v1'.
+Done.
+
+C:\Users\ash152\Documents\Visual Studio 2015\Projects\Core-OdeToCode\src\Core-OdeToCode>
+==================================================================================================================
+Now run application...:)
+
+
+

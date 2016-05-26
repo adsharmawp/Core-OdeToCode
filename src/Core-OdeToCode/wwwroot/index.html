@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h2>Hello from index.html file.</h2>
+    to see this file from root system, middleware should add following piece.<br />
+    <ul>
+        <li>First add "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final" NuGet Package</li>
+        <li>app.UseStaticFiles(); // But with this you have to navigate to index.html</li>
+        <li>app.UseDefaultFiles(); // Place before UseStaticFiles() middleware otherwise will not work</li>
+        <li>or use single method app.UseFileServer(); instead of above both app.</li>
+    </ul>
+</body>
+</html>
